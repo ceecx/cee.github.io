@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>使用中项目推荐</title>
+    <link href="/projects/"/>
+    <url>/projects/</url>
+    
+    <content type="html"><![CDATA[<h4 id="Gravatar-中国镜像"><a href="#Gravatar-中国镜像" class="headerlink" title="Gravatar 中国镜像"></a><a href="https://gravatar.w3tt.com" target="_blank" rel="noopener">Gravatar 中国镜像</a></h4><p>首先个人对使用的各种服务速度有极高的要求，而现有的国内 Gravatar 镜像速度都不理想，尝试过 V2EX、Loli 的镜像，最后还是自己动手了。后端使用多台 HK 实例负载均衡反代 Gravatar 官方源，前端采用阿里云全球 CDN 进行加速。此项目免费提供给大家使用，目前每月实例和 CDN 带宽费用也是一笔不小的开支，如果你觉得好用的话不妨可以赞助一下这个项目。 :)</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>谷歌云开启本地 SSH 工具 Root 用户登录权限</title>
+    <link href="/google-cloud-local-root-login/"/>
+    <url>/google-cloud-local-root-login/</url>
+    
+    <content type="html"><![CDATA[<p>本文讲两种本地客户端登录 Google Cloud 的方法： 1. 开启谷歌云 Root 账户密码使用本地 SSH 客户端登录。 2. 通过 Google Cloud SSH 密钥使用 XShell 客户端登录。 默认谷歌是通过 GCloud 命令在浏览器窗口访问 SSH 控制台的，它是这样实现的：</p><p><code>gcloud beta compute --project &quot;Project Name&quot; ssh --zone &quot;VM Zone&quot; &quot;VM ID&quot;</code></p><p>但是我们一般都习惯了用本地客户端登录 SSH，而有时候一些操作本地直接登录的确更方便，开启本地登录还是很有必要的，不过我建议第二种方法，因为开了 Root 账户密码后会让 Hacker 对你的实例更有机可乘。</p><h3 id="开启谷歌云-Root-账户密码使用本地-SSH-客户端登录"><a href="#开启谷歌云-Root-账户密码使用本地-SSH-客户端登录" class="headerlink" title="开启谷歌云 Root 账户密码使用本地 SSH 客户端登录"></a>开启谷歌云 Root 账户密码使用本地 SSH 客户端登录</h3><ul><li>网页打开 Google SSH 控制台连接到实例，并切换到 Root 账户：</li></ul><p><code>sudo -i</code></p><ul><li>打开SSH配置文件：</li></ul><p><code>vi /etc/ssh/sshd_config</code></p><ul><li>按 i 进入 INSERT 模式后修改以下两行：</li></ul><pre><code>#开启 Root 登录PermitRootLogin yes#开启 Root 密码PasswordAuthentication yes</code></pre><ul><li>保存并退出：</li></ul><p><code>:wq</code></p><ul><li>设置 Root 登录密码：</li></ul><p><code>passwd root</code></p><ul><li>重启 SSH 服务后就可以直接用 Root 账户登录了。</li></ul><pre><code>#Ubuntu:/etc/init.d/ssh restart#CentOS:systemctl restart sshd.service</code></pre><h3 id="通过-Google-Cloud-SSH-密钥使用-XShell-客户端登录"><a href="#通过-Google-Cloud-SSH-密钥使用-XShell-客户端登录" class="headerlink" title="通过 Google Cloud SSH 密钥使用 XShell 客户端登录"></a>通过 Google Cloud SSH 密钥使用 XShell 客户端登录</h3><ul><li>XShell 菜单栏 -&gt; 工具 -&gt; 新建用户密钥生成向导：</li></ul><p><img src="https://ooo.0x0.ooo/2020/01/17/tPwI.png" srcset="/img/loading.gif" alt="tPwI.png"><br><img src="https://ooo.0x0.ooo/2020/01/17/tt1D.png" srcset="/img/loading.gif" alt="tt1D.png"></p><ul><li>保存好你的公钥以便待会使用</li></ul><p><img src="https://ooo.0x0.ooo/2020/01/17/t4HF.png" srcset="/img/loading.gif" alt="t4HF.png"></p><ul><li>添加 SSH 密钥到 Google Cloud：</li></ul><p><img src="https://ooo.0x0.ooo/2020/01/17/tD86.png" srcset="/img/loading.gif" alt="tD86.png"></p><ul><li>粘贴你刚才生成的密钥，并在后面加上你密钥生成时设置的用户名然后保存。</li></ul><p><img src="https://ooo.0x0.ooo/2020/01/17/tLxP.png" srcset="/img/loading.gif" alt="tLxP.png"></p><ul><li>使用 XShell 连接测试</li></ul><p><img src="https://ooo.0x0.ooo/2020/01/17/tEJb.png" srcset="/img/loading.gif" alt="tEJb.png"><br><img src="https://ooo.0x0.ooo/2020/01/17/tGfl.png" srcset="/img/loading.gif" alt="tGfl.png"><br>如果登录成功你可以使用 <code>sudo -i</code> 切到 Root 账户，请保存好你的密钥信息，如果不慎丢失也没关系，删除谷歌云上你刚才创建的 SSH 密钥根据操作重新创建一个即可。我比较推荐这种安全登录方法，没有涉及到登录密码信息，也不需要你输入，除非 Hacker 有你的 SSH 密钥证书，不然几乎没有可能破解你的 SSH 登录权限。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Cloud</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Google Cloud</tag>
+      
+      <tag>XShell</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>CyberPanel：Failed to obtain SSL for domain 解决方案</title>
+    <link href="/cyberpanel-failed-to-obtain-ssl-for-domain/"/>
+    <url>/cyberpanel-failed-to-obtain-ssl-for-domain/</url>
+    
+    <content type="html"><![CDATA[<p>颁发 SSL 证书无响应或超时，出现报错： 283 Failed to obtain SSL for domain. [issueSSLForDomain] [createVirtualHost] 80％ 是 DNS 问题，可能你用了反代或主站用了 CDN，导致获取不到正确的 Server IP 而颁发失败，我的解决办法是：解析到正确的 Server IP 生效后，SSH 执行以下代码然后面板内再次申请签发证书：</p><p><code>wget -O - https://get.acme.sh | sh</code></p><p>而 20％ 是被 Lets Encrypt 限制，说明近期同一域名颁发次数过多，Lets Encrypt 限制每周同一域名签发次数是 5 次（不知道是否记错，反正次数不多）。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Web</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>CyberPanel</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Sublime Text 3 安装主题 Darkula</title>
+    <link href="/sublime-install-darkula-theme/"/>
+    <url>/sublime-install-darkula-theme/</url>
+    
+    <content type="html"><![CDATA[<p>Sublime Text 3 主题支持手动安装、Git 安装和 Package Control 安装方式，这里采用比较方便的 Package Control 来安装 Darkula Theme。 如果你没有安装 Package Control 需要先安装 Package Control，按 Ctrl + ~ 键调出控制台，然后在控制台输入并回车：</p><pre><code>import  urllib.request,os;pf=&#39;Package Control.sublime-package&#39;;ipp=sublime.installed\_packages\_path();urllib.request.install\_opener(urllib.request.build\_opener(urllib.request.ProxyHandler()));open(os.path.join(ipp,pf),&#39;wb&#39;).write(urllib.request.urlopen(&#39;http://sublime.wbond.net/&#39;+pf.replace(&#39; &#39;,&#39;%20&#39;)).read())</code></pre><p>在 Preferences 里有 Package Control 就说明已经安装成功。 打开 Package Control，输入 <code>Install Package</code> 回车，输入 <code>Darkula Color Scheme</code> 回车，这时已经完成安装，但需要你到配色方案中选择 Darkula Color Scheme，这样就成功启用了。 </p><p>提示：Darkula 不是 Dracula 主题哦。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Program</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Sublime</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>AMH5.8 LAMP 环境开启 GZIP 压缩加速网站访问</title>
+    <link href="/amh-lamp-enable-gzip/"/>
+    <url>/amh-lamp-enable-gzip/</url>
+    
+    <content type="html"><![CDATA[<p>AMH 面板默认已经集成了 GZIP，只是没有对所有网站开启，需要手动启用。网上找的教程很多都太老旧了，本规则 AMH5.8 面板 LAMP 环境可用。 使用方法：下载 AMH 的 AMHRewrite 扩展，新建规则，把伪静态规则添加在里面应用到你的网站即可，适用所有 Apache 环境，非 AMH 用户可以添加到 .htaccess 规则。 AMH 官方给的规则：</p><pre><code>&lt;ifmodule mod_deflate.c&gt;DeflateCompressionLevel 6AddOutputFilterByType DEFLATE text/plainAddOutputFilterByType DEFLATE text/htmlAddOutputFilterByType DEFLATE text/phpAddOutputFilterByType DEFLATE text/xmlAddOutputFilterByType DEFLATE text/cssAddOutputFilterByType DEFLATE text/javascript&lt;/ifmodule&gt;</code></pre><p>精简了一下规则写法：</p><pre><code>&lt;IfModule mod_deflate.c&gt;SetOutputFilter DEFLATEDeflateCompressionLevel 9AddOutputFilterByType DEFLATE text/html text/plain text/xml application/x-javascript application/x-httpd-phpAddOutputFilter DEFLATE js css&lt;/IfModule&gt;</code></pre><p>SetOutputFilter DEFLATE：告诉 Apache 对传输到浏览器的内容进行压缩。 </p><p>DeflateCompressionLevel：压缩等级。官方设置是 6 级，我这里设置 9 级，如果服务器配置比较低可以设置低一点，因为在高并发和大流量下压缩等级太高可能会导致 CPU 负荷较大。 </p><p>压缩类型：html、xml、php、css、js</p><p>为什么不使用 .htaccess 添加？当然可以，只是以防 .htaccess 文件 Web 程序频繁修改可能会覆盖，添加到 .htaccess 是一样的效果。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Web</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>AMH</tag>
+      
+      <tag>GZIP</tag>
+      
+      <tag>LAMP</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  
+</search>
